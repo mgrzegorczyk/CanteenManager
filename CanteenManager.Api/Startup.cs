@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CanteenManager.Core.Repositories;
+using CanteenManager.Infrastructure.Mappers;
 using CanteenManager.Infrastructure.Repositories;
 using CanteenManager.Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +33,7 @@ namespace CanteenManager.Api
             services.AddControllers();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, FakeUserRepository>();
+            services.AddSingleton<IMapper>(AutoMapperConfig.Initialize());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
