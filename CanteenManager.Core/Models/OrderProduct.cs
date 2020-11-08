@@ -2,7 +2,15 @@ namespace CanteenManager.Core.Models
 {
     public class OrderProduct
     {
-        public int OrderId { get; protected set; }
-        public int ProductId { get; protected set; }
+        public Order Order { get; protected set; }
+        public Product Product { get; protected set; }
+
+        protected OrderProduct() { }
+
+        public OrderProduct(Order order,Product product)
+        {
+            Order = order;
+            Product = product;
+        }
     }
 }
