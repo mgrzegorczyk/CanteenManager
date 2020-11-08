@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using CanteenManager.Core.Models;
 using CanteenManager.Core.Repositories;
 using CanteenManager.Infrastructure.DTO;
@@ -8,9 +9,12 @@ namespace CanteenManager.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IMapper mapper;
+
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             this.userRepository = userRepository;
+            this.mapper = mapper;
         }
 
         public UserDto GetUser(string email)
@@ -22,14 +26,7 @@ namespace CanteenManager.Infrastructure.Services
                 throw new Exception($"User with e-mail '{email}' does not exist!");
             }
 
-            return new UserDto
-            {
-                Id = user.Id,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                CreatedAt = user.CreatedAt,
-            };
+            return mapper.Map<User,UserDto>(user);
         }
 
         public void Register(string email, string password, string firstName, string lastName)
