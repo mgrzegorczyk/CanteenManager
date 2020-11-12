@@ -1,3 +1,4 @@
+using CanteenManager.Infrastructure.Commands.User;
 using CanteenManager.Infrastructure.DTO;
 using CanteenManager.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,19 @@ namespace CanteenManager.Api.Controllers
         public UserController(IUserService userService)
         {
             this.userService = userService;
-            
+
         }
 
         [HttpGet("{email}")]
         public UserDto Get(string email)
         {
             return userService.GetUser(email);
+        }
+
+        [HttpPost]
+        public void Post([FromBody]CreateUser user)
+        {
+            userService.Register(user.Email, user.Password, user.FirstName, user.LastName);
         }
     }
 }
