@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using CanteenManager.Core.Models;
 using CanteenManager.Core.Repositories;
@@ -17,9 +18,9 @@ namespace CanteenManager.Infrastructure.Services
             this.mapper = mapper;
         }
 
-        public UserDto GetUser(string email)
+        public async Task<UserDto> GetUserAsync(string email)
         {
-            var user = userRepository.Get(email);
+            var user = await userRepository.GetAsync(email);
 
             if (user == null)
             {
@@ -29,9 +30,9 @@ namespace CanteenManager.Infrastructure.Services
             return mapper.Map<User,UserDto>(user);
         }
 
-        public void Register(string email, string password, string firstName, string lastName)
+        public async Task RegisterAsync(string email, string password, string firstName, string lastName)
         {
-            var user = userRepository.Get(email);
+            var user = await userRepository.GetAsync(email);
 
             if (user != null)
             {
@@ -44,7 +45,7 @@ namespace CanteenManager.Infrastructure.Services
 
             user = new User(email, password, salt, firstName, lastName);
 
-            userRepository.Add(user);
+            await userRepository.AddAsync(user);
         }
 
     }

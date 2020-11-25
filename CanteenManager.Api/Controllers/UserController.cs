@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CanteenManager.Infrastructure.Commands.User;
 using CanteenManager.Infrastructure.DTO;
 using CanteenManager.Infrastructure.Services;
@@ -7,7 +8,7 @@ namespace CanteenManager.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
         private readonly IUserService userService;
 
@@ -18,15 +19,24 @@ namespace CanteenManager.Api.Controllers
         }
 
         [HttpGet("{email}")]
-        public UserDto Get(string email)
+        public async Task<IActionResult> Get(string email)
         {
-            return userService.GetUser(email);
+            var user = await userService.GetUserAsync(email);
+
+            if(user == null) 
+            {
+                return NotFound();
+            }
+
+            return Json(user);
         }
 
         [HttpPost]
-        public void Post([FromBody]CreateUser user)
+        public async Task<IActionResult> Post([FromBody]CreateUser user)
         {
-            userService.Register(user.Email, user.Password, user.FirstName, user.LastName);
+            await userService.RegisterAsync(user.Email, user.Password, user.FirstName, user.LastName);
+
+            return Created($"user/{user.Email}", user);
         }
     }
 }
