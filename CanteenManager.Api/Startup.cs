@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using CanteenManager.Core.Repositories;
+using CanteenManager.Infrastructure.IoC.Modules;
 using CanteenManager.Infrastructure.Mappers;
 using CanteenManager.Infrastructure.Repositories;
 using CanteenManager.Infrastructure.Services;
@@ -20,12 +23,17 @@ namespace CanteenManager.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IContainer ApplicationContainer { get; private set; }
+        public IConfigurationRoot Configuration { get; }
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            this.Configuration = builder.Build();
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,6 +42,11 @@ namespace CanteenManager.Api
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, FakeUserRepository>();
             services.AddSingleton<IMapper>(AutoMapperConfig.Initialize());
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AppCommandModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
