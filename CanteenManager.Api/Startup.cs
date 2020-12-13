@@ -39,14 +39,13 @@ namespace CanteenManager.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, FakeUserRepository>();
-            
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new MainModule(Configuration));
+            builder.RegisterModule<RepositoryModule>();
+            builder.RegisterModule<ServiceModule>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

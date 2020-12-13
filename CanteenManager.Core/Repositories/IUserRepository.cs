@@ -5,7 +5,7 @@ using CanteenManager.Core.Models;
 
 namespace CanteenManager.Core.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository
     {
         Task<User> GetAsync(Guid id);
         Task<User> GetAsync(string email);
