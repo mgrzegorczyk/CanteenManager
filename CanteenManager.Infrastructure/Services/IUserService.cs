@@ -7,5 +7,6 @@ namespace CanteenManager.Infrastructure.Services
     {
         Task<UserDto> GetUserAsync(string email);
         Task RegisterAsync(string email, string password, string firstName, string lastName);
+        Task LoginAsync(string email, string password);
     }
 }
