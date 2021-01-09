@@ -1,4 +1,3 @@
-using System.Reflection;
 using Autofac;
 using CanteenManager.Infrastructure.Extensions;
 using CanteenManager.Infrastructure.Settings;
@@ -18,6 +17,9 @@ namespace CanteenManager.Infrastructure.IoC.Modules
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterInstance(configuration.GetSettings<GeneralSettings>())
+                .SingleInstance();
+            
+            builder.RegisterInstance(configuration.GetSettings<JwtSettings>())
                 .SingleInstance();
         }
     }
