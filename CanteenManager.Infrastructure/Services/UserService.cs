@@ -49,7 +49,7 @@ namespace CanteenManager.Infrastructure.Services
             var salt = encrypter.GetSalt(password);
             var hash = encrypter.GetHash(password, salt);
 
-            user = new User(email, hash, salt, firstName, lastName);
+            user = new User(email, hash, salt, firstName, lastName, "user");
 
             await userRepository.AddAsync(user);
         }
@@ -63,8 +63,7 @@ namespace CanteenManager.Infrastructure.Services
                 throw new Exception("Invalid credentials");
             }
 
-            var salt = encrypter.GetSalt(password);
-            var hash = encrypter.GetHash(password, salt);
+            var hash = encrypter.GetHash(password, user.Salt);
 
             if (user.Password == hash)
             {

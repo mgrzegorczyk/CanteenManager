@@ -11,7 +11,7 @@ namespace CanteenManager.Infrastructure.Repositories
     {
         private static ISet<User> _users = new HashSet<User>
         {
-            new User("test@mail.com", "testpwd", "salt", "John", "Doe")
+            new User("test@mail.com", "testpwd", "salt", "John", "Doe", "user")
         };
 
         public async Task AddAsync(User user)

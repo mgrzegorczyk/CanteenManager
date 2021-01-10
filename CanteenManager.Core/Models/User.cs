@@ -12,17 +12,18 @@ namespace CanteenManager.Core.Models
         public string LastName { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
+        public string Role { get; protected set; }
 
         protected User() { }
 
-        public User(string email, string password, string salt, string firstName, string lastName)
+        public User(string email, string password, string salt, string firstName, string lastName, string role)
         {
             Id = Guid.NewGuid();
-            Email = email;
-            Password = password;
-            Salt = salt;
-            FirstName = firstName;
-            LastName = lastName;
+            SetEmail(email);
+            SetPassword(password, salt);
+            SetFirstName(firstName);
+            SetLastName(lastName);
+            SetRole(role);
             CreatedAt = DateTime.UtcNow;
         }
 
@@ -100,6 +101,20 @@ namespace CanteenManager.Core.Models
             }
 
             LastName = lastName;
+            UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SetRole(string role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                throw new ArgumentException("Role can't be empty!", nameof(role));
+            }
+            if (Role == role)
+            {
+                return;
+            }
+            Role = role;
             UpdatedAt = DateTime.UtcNow;
         }
     }
