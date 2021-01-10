@@ -32,6 +32,8 @@ namespace CanteenManager.Api
         {
             var jwtSettings = Configuration.GetSettings<JwtSettings>();
 
+            services.AddMemoryCache();
+
             services.AddControllers();
 
             services.AddAuthentication(options =>

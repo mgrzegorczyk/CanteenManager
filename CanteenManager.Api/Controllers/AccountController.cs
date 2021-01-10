@@ -17,14 +17,5 @@ namespace CanteenManager.Api.Controllers
         {
             this.jwtHandler = jwtHandler;
         }
-
-        [HttpGet]
-        [Route("token")]
-        public IActionResult GetToken()
-        {
-            var token = jwtHandler.CreateToken("user@email.com", "user");
-
-            return Json(token);
-        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using CanteenManager.Infrastructure.Commands;
 using CanteenManager.Infrastructure.Commands.User;
@@ -15,7 +16,10 @@ namespace CanteenManager.Infrastructure.Handlers.Users
         }
         public async Task HandleAsync(CreateUser createUserCommand)
         {
-            await userService.RegisterAsync(createUserCommand.Email, createUserCommand.Password, createUserCommand.FirstName, createUserCommand.LastName);
+            var userId = Guid.NewGuid();
+            var role = "user";
+
+            await userService.RegisterAsync(userId, createUserCommand.Email, createUserCommand.Password, createUserCommand.FirstName, createUserCommand.LastName, role);
         }
     }
 }

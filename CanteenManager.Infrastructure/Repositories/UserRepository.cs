@@ -9,10 +9,7 @@ namespace CanteenManager.Infrastructure.Repositories
 {
     public class FakeUserRepository : IUserRepository
     {
-        private static ISet<User> _users = new HashSet<User>
-        {
-            new User("test@mail.com", "testpwd", "salt", "John", "Doe", "user")
-        };
+        private static ISet<User> _users = new HashSet<User>();
 
         public async Task AddAsync(User user)
         {

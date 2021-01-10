@@ -16,9 +16,9 @@ namespace CanteenManager.Core.Models
 
         protected User() { }
 
-        public User(string email, string password, string salt, string firstName, string lastName, string role)
+        public User(Guid userId, string email, string password, string salt, string firstName, string lastName, string role)
         {
-            Id = Guid.NewGuid();
+            Id = userId;
             SetEmail(email);
             SetPassword(password, salt);
             SetFirstName(firstName);

@@ -37,7 +37,7 @@ namespace CanteenManager.Infrastructure.Services
             return mapper.Map<User, UserDto>(user);
         }
 
-        public async Task RegisterAsync(string email, string password, string firstName, string lastName)
+        public async Task RegisterAsync(Guid userId, string email, string password, string firstName, string lastName, string role)
         {
             var user = await userRepository.GetAsync(email);
 
@@ -49,7 +49,7 @@ namespace CanteenManager.Infrastructure.Services
             var salt = encrypter.GetSalt(password);
             var hash = encrypter.GetHash(password, salt);
 
-            user = new User(email, hash, salt, firstName, lastName, "user");
+            user = new User(userId, email, hash, salt, firstName, lastName, role);
 
             await userRepository.AddAsync(user);
         }
