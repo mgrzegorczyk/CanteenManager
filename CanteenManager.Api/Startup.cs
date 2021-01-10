@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CanteenManager.Infrastructure.Extensions;
 using CanteenManager.Infrastructure.Settings;
+using CanteenManager.Infrastructure.Services;
 
 namespace CanteenManager.Api
 {
@@ -62,9 +63,18 @@ namespace CanteenManager.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var generalSettings = app.ApplicationServices.GetService<GeneralSettings>();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            if(generalSettings.SeedData == true)
+            {
+                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+
+                dataInitializer.SeedAsync();
             }
 
             app.UseHttpsRedirection();
