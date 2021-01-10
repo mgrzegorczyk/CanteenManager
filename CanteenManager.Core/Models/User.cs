@@ -33,12 +33,12 @@ namespace CanteenManager.Core.Models
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new Exception("Password can not be empty!");
+                throw new ArgumentException("Password can not be empty!", nameof(password));
             }
 
             if (string.IsNullOrWhiteSpace(salt))
             {
-                throw new Exception("Salt can not be empty!");
+                throw new ArgumentException("Salt can not be empty!", nameof(salt));
             }
 
             if (password.Length < minPasswordLength)
@@ -60,7 +60,7 @@ namespace CanteenManager.Core.Models
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                throw new Exception("Email can not be empty!");
+                throw new ArgumentException("Email can not be empty!", nameof(email));
             }
 
             if (Email == email)
@@ -76,7 +76,7 @@ namespace CanteenManager.Core.Models
         {
             if (string.IsNullOrWhiteSpace(firstName))
             {
-                throw new Exception("First name can not be empty!");
+                throw new ArgumentException("First name can not be empty!", nameof(firstName));
             }
 
             if (FirstName == firstName)
@@ -92,7 +92,7 @@ namespace CanteenManager.Core.Models
         {
             if (string.IsNullOrWhiteSpace(lastName))
             {
-                throw new Exception("Last name can not be empty!");
+                throw new ArgumentException("Last name can not be empty!", nameof(lastName));
             }
 
             if (LastName == lastName)
