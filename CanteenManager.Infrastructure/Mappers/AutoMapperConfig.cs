@@ -8,10 +8,12 @@ namespace CanteenManager.Infrastructure.Mappers
     {
         public static IMapper Initialize()
         {
-            var config = new MapperConfiguration(cfg => 
+            var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<UserDto, User>();
+                cfg.CreateMap<Product, ProductDto>();
+                cfg.CreateMap<ProductDto, Product>();
             });
 
             return config.CreateMapper();
