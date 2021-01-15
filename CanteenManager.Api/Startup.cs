@@ -35,7 +35,8 @@ namespace CanteenManager.Api
 
             services.AddMemoryCache();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true);
 
             services.AddAuthentication(options =>
             {
