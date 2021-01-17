@@ -14,6 +14,7 @@ namespace CanteenManager.Infrastructure.Mappers
                 cfg.CreateMap<UserDto, User>();
                 cfg.CreateMap<Product, ProductDto>();
                 cfg.CreateMap<ProductDto, Product>();
+                cfg.CreateMap<Order, OrderDto>();
             });
 
             return config.CreateMapper();
